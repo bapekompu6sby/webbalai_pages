@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balai Pengembangan Kompetensi - Kementerian PUPR</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f8f9fa;
+            color: #1A2951;
+            line-height: 1.6;
+            padding: 16px;
+        }
+
+        .bpk-border1 {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Pure CSS animations */
+        @keyframes bpk-fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bpk-section {
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(26, 41, 81, 0.08);
+            position: relative;
+            overflow: hidden;
+            /* CSS Animation */
+            animation: bpk-fadeUp 0.7s ease forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+
+        .bpk-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #FFB800;
+        }
+
+        .bpk-section:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(26, 41, 81, 0.12);
+        }
+
+        #bpk-tugas {
+            background: #FFB800;
+            color: #1A2951;
+        }
+
+        #bpk-tugas::before {
+            background: #1A2951;
+        }
+
+        #bpk-fungsi {
+            background: #1A2951;
+            color: #ffffff;
+        }
+
+        .bpk-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 32px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 16px;
+            /* CSS Animation */
+            animation: bpk-fadeUp 0.7s ease forwards;
+            animation-delay: 2.2s;
+            opacity: 0;
+        }
+
+        .bpk-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+        }
+
+        .bpk-section-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .bpk-section-content ul {
+            list-style: none;
+        }
+
+        #bpk-tugas .bpk-section-content li {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding: 16px;
+            margin: 24px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(26, 41, 81, 0.08);
+            /* CSS Animation */
+            animation: bpk-fadeUp 0.7s ease forwards;
+            animation-delay: 2.7s;
+            opacity: 0;
+        }
+
+        #bpk-fungsi .bpk-section-content li {
+            position: relative;
+            padding-left: 56px;
+            margin-bottom: 24px;
+            counter-increment: bpk-fungsi-counter;
+            font-size: 1.1rem;
+            /* CSS Animation with sequential delays */
+            opacity: 0;
+            animation: bpk-fadeUp 0.7s ease forwards;
+        }
+
+        /* Adding sequential delays to list items */
+        #bpk-fungsi .bpk-section-content li:nth-child(1) { animation-delay: 2.7s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(2) { animation-delay: 2.85s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(3) { animation-delay: 3.0s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(4) { animation-delay: 3.15s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(5) { animation-delay: 3.3s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(6) { animation-delay: 3.45s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(7) { animation-delay: 3.6s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(8) { animation-delay: 3.75s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(9) { animation-delay: 3.9s; }
+        #bpk-fungsi .bpk-section-content li:nth-child(10) { animation-delay: 4.05s; }
+
+        #bpk-fungsi .bpk-section-content li::before {
+            content: counter(bpk-fungsi-counter);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: #FFB800;
+            color: #1A2951;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .bpk-border1 {
+                padding: 16px;
+            }
+
+            .bpk-section {
+                padding: 24px;
+            }
+
+            .bpk-section h2 {
+                font-size: 1.8rem;
+            }
+
+            #bpk-tugas .bpk-section-content li {
+                font-size: 1.2rem;
+            }
+
+            #bpk-fungsi .bpk-section-content li {
+                font-size: 1rem;
+                padding-left: 48px;
+            }
+
+            #bpk-fungsi .bpk-section-content li::before {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bpk-border1 {
+                padding: 12px;
+            }
+
+            .bpk-section {
+                padding: 20px;
+            }
+
+            .bpk-section h2 {
+                font-size: 1.5rem;
+            }
+
+            #bpk-tugas .bpk-section-content li {
+                font-size: 1.1rem;
+            }
+
+            #bpk-fungsi .bpk-section-content li {
+                padding-left: 40px;
+            }
+
+            #bpk-fungsi .bpk-section-content li::before {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Fallback for browsers/CMSs with limited CSS support */
+        @media (prefers-reduced-motion), (update: slow) {
+            .bpk-section, 
+            .bpk-section h2, 
+            #bpk-tugas .bpk-section-content li, 
+            #bpk-fungsi .bpk-section-content li {
+                opacity: 1;
+                animation: none;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bpk-border1">
+        <section class="bpk-section" id="bpk-tugas">
+            <h2 style="color:#1A2951">Tugas</h2>
+            <div class="bpk-section-content">
+                <ul>
+                    <li>Menyelenggarakan pengembangan kompetensi bidang pekerjaan umum.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bpk-section" id="bpk-fungsi">
+            <h2 style="color:#f8f9fa">Fungsi</h2>
+            <div class="bpk-section-content">
+                <ul>
+                    <li>Penyusunan rencana program pengembangan kompetensi</li>
+                    <li>Identifikasi kebutuhan pengembangan kompetensi sesuai Wilayah Kerja</li>
+                    <li>Identifikasi, penyusunan dan pemanfaatan aset pengetahuan dari berbagai proyek di Kementerian sesuai Wilayah Kerja</li>
+                    <li>Pelaksanaan sosialisasi dan kerja sama pengembangan kompetensi sesuai Wilayah Kerja</li>
+                    <li>Pelaksanaan pengembangan kompetensi</li>
+                    <li>Pemantauan, evaluasi, dan pelaporan pelaksanaan pengembangan kompetensi</li>
+                    <li>Pengelolaan sistem informasi pengembangan kompetensi</li>
+                    <li>Pengelolaan sarana dan prasarana balai</li>
+                    <li>Pelaksanaan dan koordinasi pembangunan zona integritas, pelaksanaan fungsi kepatuhan intern dan manajemen risiko sesuai dengan kewenangannya</li>
+                    <li>Pelaksanaan urusan tata usaha dan rumah tangga balai</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

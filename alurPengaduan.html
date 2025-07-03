@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alur Pengaduan - Balai Pengembangan Kompetensi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f8f9fa;
+            color: #1A2951;
+            line-height: 1.6;
+        }
+
+        /* Flow step card */
+        .ap-step {
+            position: relative;
+            padding: 2.5rem 1.5rem 1.5rem;
+            background: #ffffff;
+            border-radius: 0.5rem;
+            border: none; /* Remove border for raised look */
+            box-shadow: 0 2px 6px rgba(26, 41, 81, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ap-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(26, 41, 81, 0.12);
+        }
+
+        /* Number badge */
+        .ap-step-number {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #FFB800;
+            color: #1A2951;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 576px) {
+            .ap-step {
+                margin-top: 2.5rem; /* spacing for overlapping badge */
+            }
+            
+            /* Make button more responsive on mobile */
+            .ap-cta2-btn {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+                padding: 1rem;
+                font-size: 0.95rem;
+                white-space: normal; /* Allow text to wrap */
+            }
+        }
+
+        /* === CTA Section (unique prefixed classes) === */
+        .ap-cta-bullet {
+            width: 8px;
+            height: 8px;
+            background: #FFB800;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .ap-cta-text {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ap-cta-btn {
+            border: 1px solid #FFB800;
+            color: #FFB800;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: transparent;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .ap-cta-btn:hover,
+        .ap-cta-btn:focus {
+            background: #FFB800;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* === CTA Section variant (catchy design, no yellow text) === */
+        .ap-cta2-dot {
+            width: 10px;
+            height: 10px;
+            background: #FFB800;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .ap-cta2-text {
+            font-weight: 600;
+            color: #1A2951;
+            font-size: 0.95rem;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .ap-cta2-btn {
+            background: #FFB800;
+            color: #1A2951;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 0.35rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .ap-cta2-btn:hover,
+        .ap-cta2-btn:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            color: #ffffff;
+        }
+
+        /* === Sequential animations with unique effects === */
+        /* Title animation - Slide from left with fade */
+        @keyframes apTitleAnim {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Subtitle animation - Fade in with slight zoom */
+        @keyframes apSubtitleAnim {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Step cards animation - Rise up */
+        @keyframes apStepAnim {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Text before button - Fade with horizontal slide */
+        @keyframes apTextAnim {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Button animation - Pop and bounce */
+        @keyframes apButtonAnim {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            85% {
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Apply animations to elements with specific timing */
+        .ap-title {
+            opacity: 0;
+            animation: apTitleAnim 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+        
+        .ap-subtitle {
+            opacity: 0;
+            animation: apSubtitleAnim 0.8s ease forwards;
+            animation-delay: 0.8s;
+        }
+        
+        .ap-step-1 {
+            opacity: 0;
+            animation: apStepAnim 0.7s ease forwards;
+            animation-delay: 1.5s;
+        }
+        
+        .ap-step-2 {
+            opacity: 0;
+            animation: apStepAnim 0.7s ease forwards;
+            animation-delay: 1.8s;
+        }
+        
+        .ap-step-3 {
+            opacity: 0;
+            animation: apStepAnim 0.7s ease forwards;
+            animation-delay: 2.1s;
+        }
+        
+        .ap-step-4 {
+            opacity: 0;
+            animation: apStepAnim 0.7s ease forwards;
+            animation-delay: 2.4s;
+        }
+        
+        .ap-step-5 {
+            opacity: 0;
+            animation: apStepAnim 0.7s ease forwards;
+            animation-delay: 2.7s;
+        }
+        
+        .ap-cta-text {
+            opacity: 0;
+            animation: apTextAnim 0.8s ease forwards;
+            animation-delay: 3.0s;
+        }
+        
+        .ap-cta-btn {
+            opacity: 0;
+            animation: apButtonAnim 1s ease forwards;
+            animation-delay: 3.3s;
+        }
+
+        /* Subtitle below main heading */
+        .ap-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1A2951;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <main class="container my-5" style="max-width: 900px;">
+        <h1 class="ap-title text-center fw-bold mb-2">Alur Pengaduan Masyarakat</h1>
+        <h4 class="ap-subtitle text-center mb-5">BAPEKOM IV SURABAYA</h4>
+        <div class="row g-4">
+            <div class="col-md">
+                <div class="ap-step ap-step-1 h-100 text-center">
+                    <div class="ap-step-number">1</div>
+                    <h5 class="fw-semibold mt-3">Penerimaan Pengaduan</h5>
+                    <p class="mb-0">Masyarakat menyampaikan pengaduan melalui kanal resmi Balai Pengembangan Kompetensi.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ap-step ap-step-2 h-100 text-center">
+                    <div class="ap-step-number">2</div>
+                    <h5 class="fw-semibold mt-3">Verifikasi Awal</h5>
+                    <p class="mb-0">Tim melakukan verifikasi kelengkapan dan validitas data pengaduan.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ap-step ap-step-3 h-100 text-center">
+                    <div class="ap-step-number">3</div>
+                    <h5 class="fw-semibold mt-3">Penelaahan</h5>
+                    <p class="mb-0">Pengaduan dipelajari untuk menentukan tindak lanjut yang diperlukan.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ap-step ap-step-4 h-100 text-center">
+                    <div class="ap-step-number">4</div>
+                    <h5 class="fw-semibold mt-3">Tindakan Korektif</h5>
+                    <p class="mb-0">Instansi terkait melakukan perbaikan sesuai hasil penelaahan.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ap-step ap-step-5 h-100 text-center">
+                    <div class="ap-step-number">5</div>
+                    <h5 class="fw-semibold mt-3">Umpan Balik</h5>
+                    <p class="mb-0">Pelapor menerima informasi hasil penanganan pengaduan.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section (updated) -->
+        <div class="ap-cta2 container text-center my-5">
+            <p class="ap-cta2-text ap-cta-text mb-4"><span class="ap-cta2-dot me-2"></span>Silakan klik tombol di bawah ini!</p>
+            <a href="https://api.whatsapp.com/send/?phone=6281252800027&text&type=phone_number&app_absent=0" class="btn ap-cta2-btn ap-cta-btn">WhatsApp Pengaduan Balai 6</a>
+        </div>
+    </main>
+
+    <!-- Bootstrap Bundle JS (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
